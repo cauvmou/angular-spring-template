@@ -1,0 +1,35 @@
+version: "3.0"
+
+services:
+  frontend:
+    container_name: frontend
+    volumes:
+      - ./frontend:/app-dev
+    build: 
+      context: ./frontend
+      dockerfile: ./docker/Dockerfile.dev
+    networks:
+      - intern
+  backend:
+    container_name: backend
+    volumes:
+      - ./backend:/app-dev
+    build: 
+      context: ./backend
+      dockerfile: ./docker/Dockerfile.dev
+    networks:
+      - intern
+  proxy:
+    container_name: nginx
+    image: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/cert:/etc/cert/nginx
+    networks:
+      - intern
+    ports:
+      - 80:80
+      - 443:443
+
+networks:
+  intern:
