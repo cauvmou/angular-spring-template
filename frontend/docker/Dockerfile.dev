@@ -1,0 +1,5 @@
+FROM node:latest as node
+WORKDIR /app-dev
+COPY . .
+RUN npm install
+CMD ["/bin/sh", "-c", "npm run start"]
